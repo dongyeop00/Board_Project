@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>동엽이 홈페이지</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+
+<form action="/member/login" method="post">
+    <label for="index_email" id="emailLabel">이메일 :</label>
+    <input type="text" name="memberEmail" id="index_email"> <br>
+    <label for="index_password" id="passwordLabel">비밀번호 :</label>
+    <input type="password" name="memberPassword" id="index_password"> <br>
+    <input type="submit" id="index_login" value="로그인">
+</form>
+    <button onclick="join()" id="index_join">회원가입</button>
+
+</body>
+<script>
+    const join = () => {
+        location.href="/member/join";
+    }
+
+</script>
+</html>
