@@ -1,26 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>동엽이 홈페이지</title>
     <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" href="index_nav.css">
 </head>
 <body>
+<nav>
+    <ul>
+        <li><a href="/">로고</a></li>
+        <li><a href="">가입 인사</a></li>
+        <li><a href="">자유게시판</a></li>
+        <li><a href="">골드게시판</a></li>
+    </ul>
+</nav>
 
-<form action="/member/login" method="post">
-    <label for="index_email" id="emailLabel">이메일 :</label>
-    <input type="text" name="memberEmail" id="index_email"> <br>
-    <label for="index_password" id="passwordLabel">비밀번호 :</label>
-    <input type="password" name="memberPassword" id="index_password"> <br>
-    <input type="submit" id="index_login" value="로그인">
-</form>
+<div th:if="${session.loginEmail != null}">
+    <!-- 세션에 로그인 정보가 있는 경우에만 실행 -->
+    <p id="information" th:text="${session.loginEmail + '님 안녕하세요'}"></p>
+    <button onclick="logout()" id="index_logout">로그아웃</button>
+</div>
+
+<div th:if="${session.loginEmail == null}">
+    <!-- 세션에 로그인 정보가 없는 경우에만 실행 -->
+    <form action="/member/login" method="post">
+        <input type="text" name="memberEmail" id="index_email" placeholder="이메일"> <br>
+        <input type="password" name="memberPassword" id="index_password" placeholder="비밀번호"> <br>
+        <input type="submit" id="index_login" value="로그인">
+    </form>
     <button onclick="join()" id="index_join">회원가입</button>
+</div>
 
-</body>
 <script>
     const join = () => {
         location.href="/member/join";
     }
 
+    const logout = () => {
+        location.href="/member/logout";
+    }
 </script>
+</body>
 </html>
