@@ -1,35 +1,37 @@
 #index_email {
     position: absolute;
-    left: 100px;
-    top: 100px;
+    left: 1000px;
+    top: 25px;
 }
 
-#emailLabel {
-    position: absolute;
-    left: 30px;
-    top: 100px;
-}
 
 #index_password {
     position: absolute;
-    left: 100px;
-    top: 130px;
+    left: 1180px;
+    top: 25px;
 }
 
-#passwordLabel {
-    position: absolute;
-    left: 20px;
-    top: 130px;
-}
 
 #index_login {
     position: absolute;
-    left: 100px;
-    top: 160px;
+    left: 1360px;
+    top: 25px;
 }
 
 #index_join{
     position: absolute;
-    left: 170px;
-    top: 160px;
+    left: 1430px;
+    top: 25px;
+}
+
+#information{
+    position: absolute;
+    left: 1170px;
+    top: 10px;
+}
+
+#index_logout {
+    position: absolute;
+    left: 1430px;
+    top: 25px;
 }
