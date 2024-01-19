@@ -32,6 +32,7 @@ public class MemberService {
             if(memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())){ //비밀번호 일치
                 // entity ->dto 변환 후 리턴
                 MemberDTO dto = MemberDTO.toMemberDTO(memberEntity);
+                System.out.println(dto);
                 return dto;
             }
             else{ //비밀번호 불일치
