@@ -6,6 +6,7 @@ import com.gdy.board_project.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +39,15 @@ public class MemberService {
             }
         }
         else{ //조회 결과가 없다.
+            return null;
+        }
+    }
+
+    public MemberDTO findById(Long id) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+        if (optionalMemberEntity.isPresent()) {
+            return MemberDTO.toMemberDTO(optionalMemberEntity.get());
+        } else {
             return null;
         }
     }

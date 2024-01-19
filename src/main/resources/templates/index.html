@@ -19,6 +19,7 @@
 <div th:if="${session.loginEmail != null}">
     <!-- 세션에 로그인 정보가 있는 경우에만 실행 -->
     <p id="information" th:text="${session.loginEmail + '님 안녕하세요'}"></p>
+    <button onclick="detail()" id="index_detail">내 정보</button>
     <button onclick="logout()" id="index_logout">로그아웃</button>
 </div>
 
@@ -39,6 +40,11 @@
 
     const logout = () => {
         location.href="/member/logout";
+    }
+
+
+    const detail = () => {
+        location.href="@{|/member/${member.id}|}";
     }
 </script>
 </body>

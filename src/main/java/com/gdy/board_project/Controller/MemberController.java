@@ -6,10 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/member")
@@ -32,10 +29,11 @@ public class MemberController {
     @PostMapping("/login")
     public String loginForm(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model){
         MemberDTO loginResult = memberService.login(memberDTO);
-        System.out.println(loginResult);
+        System.out.println("loginResult :" + loginResult);
         if(loginResult != null){ //login 성공
             session.setAttribute("loginEmail",loginResult.getMemberEmail());
-            model.addAttribute("memberName",loginResult.getMemberName());
+            model.addAttribute("member",loginResult);
+            System.out.println("그냥 : " + memberDTO);
             return "redirect:/";
         }
         else{ //login 실패
@@ -47,5 +45,12 @@ public class MemberController {
     public String logout(HttpSession session){
         session.invalidate();
         return "redirect:/";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable Long id, Model model){
+        MemberDTO memberDTO = memberService.findById(id);
+        model.addAttribute("member",memberDTO);
+        return "detail"; //값들을 detail로 가져간다
     }
 }

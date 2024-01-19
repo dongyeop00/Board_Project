@@ -26,12 +26,18 @@
 
 #information{
     position: absolute;
-    left: 1170px;
+    left: 1100px;
     top: 10px;
 }
 
 #index_logout {
     position: absolute;
     left: 1430px;
+    top: 25px;
+}
+
+#index_detail{
+    position: absolute;
+    left: 1360px;
     top: 25px;
 }
