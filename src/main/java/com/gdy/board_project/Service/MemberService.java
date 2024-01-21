@@ -6,6 +6,7 @@ import com.gdy.board_project.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,4 +54,18 @@ public class MemberService {
         }
     }
 
+    public void update(MemberDTO memberDTO) {
+        //updateMemberEntity를 안만들어주면 insert가 되어버린다.
+        memberRepository.save(MemberEntity.toUpdateMemberEntity(memberDTO));
+    }
+
+    public MemberDTO updateForm(String myEmail) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(myEmail);
+        if(optionalMemberEntity.isPresent()){
+            return MemberDTO.toMemberDTO(optionalMemberEntity.get());
+        }
+        else{
+            return null;
+        }
+    }
 }

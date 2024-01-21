@@ -3,21 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>내 정보</title>
+    <link rel="stylesheet" type="text/css" href="detail.css">
 </head>
 <body>
-<table>
+
+<!-- controller에서 member로 담아서 줫으니 member로 접근 -->
+<table align="center">
     <tr>
-        <th>id</th>
-        <th>email</th>
-        <th>password</th>
-        <th>name</th>
+        <td>이메일 :</td>
+        <td th:text="${member.memberEmail}"></td>
     </tr>
     <tr>
-        <td th:text="${member.id}"></td> <!-- controller에서 member로 담아서 줫으니 member로 접근 -->
-        <td th:text="${member.memberEmail}"></td>
+        <td>비밀번호 :</td>
         <td th:text="${member.memberPassword}"></td>
+    </tr>
+    <tr>
+        <td>닉네임 :</td>
         <td th:text="${member.memberName}"></td>
     </tr>
 </table>
+
+<form action="/" method="get">
+    <button onclick="home()"> 이전 </button>
+</form>
+
+<form action="/member/update" method="get">
+    <button onclick="update()"> 정보 수정 </button>
+</form>
+
 </body>
+<script>
+    const onclick = () => {
+        location.href="/";
+    }
+
+    const update = () => {
+        location.href="/member/update";
+    }
+</script>
 </html>

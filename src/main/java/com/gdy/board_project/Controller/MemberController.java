@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
+
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -52,5 +54,23 @@ public class MemberController {
         System.out.println(memberDTO);
         model.addAttribute("member",memberDTO);
         return "detail"; //값들을 detail로 가져간다
+    }
+
+    @GetMapping("/update")
+    public String update(HttpSession session, Model model){
+        //내 정보는 session에 담겨져 있다.
+        //session에 email값을 가져오고, email 값으로 db 전체 정보 가져오기
+
+        String myEmail = ((MemberDTO) session.getAttribute("member")).getMemberEmail();
+        MemberDTO memberDTO = memberService.updateForm(myEmail);
+        //MemberDTO memberDTO = memberService.updateForm(sessionDTO);
+        model.addAttribute("updateMember",memberDTO);
+        return "update";
+    }
+
+    @PostMapping("/update")
+    public String updateForm(@ModelAttribute MemberDTO memberDTO){
+        memberService.update(memberDTO);
+        return "redirect:/member/detail/"+memberDTO.getId();
     }
 }
