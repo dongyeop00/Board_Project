@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Member;
-
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -19,7 +17,7 @@ public class MemberController {
 
     @GetMapping("/join")
     public String joinForm(){
-        return "join";
+        return "/user/join";
     }
 
     @PostMapping("/join")
@@ -53,7 +51,7 @@ public class MemberController {
         MemberDTO memberDTO = memberService.findById(id);
         System.out.println(memberDTO);
         model.addAttribute("member",memberDTO);
-        return "detail"; //값들을 detail로 가져간다
+        return "/user/detail"; //값들을 detail로 가져간다
     }
 
     @GetMapping("/update")
@@ -63,9 +61,10 @@ public class MemberController {
 
         String myEmail = ((MemberDTO) session.getAttribute("member")).getMemberEmail();
         MemberDTO memberDTO = memberService.updateForm(myEmail);
+        System.out.println("update memberDTO : " + memberDTO);
         //MemberDTO memberDTO = memberService.updateForm(sessionDTO);
         model.addAttribute("updateMember",memberDTO);
-        return "update";
+        return "/user/update";
     }
 
     @PostMapping("/update")

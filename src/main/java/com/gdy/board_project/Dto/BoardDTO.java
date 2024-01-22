@@ -1,5 +1,6 @@
 package com.gdy.board_project.Dto;
 
+import com.gdy.board_project.Entity.BoardEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,5 +17,28 @@ public class BoardDTO {
     private int boardHits;
     private LocalDateTime boardCreatedTime;
     private LocalDateTime boardUpdatedTime;
-    private MemberDTO userID;
+    private Long memberId;
+
+
+    public static BoardDTO toBoardDTO(BoardEntity boardEntity){
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(boardEntity.getId());
+        boardDTO.setBoardTitle(boardEntity.getBoardTitle());
+        boardDTO.setBoardContents(boardEntity.getBoardContent());
+        boardDTO.setBoardHits(boardEntity.getBoardHits());
+        return boardDTO;
+    }
+
+    public static BoardDTO toBoardDTOList(BoardEntity boardEntity, Long memberId){
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(boardEntity.getId());
+        boardDTO.setBoardTitle(boardEntity.getBoardTitle());
+        boardDTO.setBoardContents(boardEntity.getBoardContent());
+        boardDTO.setBoardHits(boardEntity.getBoardHits());
+        boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
+        boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
+        boardDTO.setMemberId(memberId);
+        return boardDTO;
+    }
+
 }

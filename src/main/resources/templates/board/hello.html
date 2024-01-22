@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>hello 게시판</title>
+</head>
+<body>
+
+<form action="/board/hello/write" method="get">
+  <button type="submit">글 작성</button>
+</form>
+
+<table>
+  <tr>
+    <th>id</th>
+    <th>title</th>
+    <th>date</th>
+    <th>hits</th>
+  </tr>
+  <tr th:each="board: ${boardList}">
+    <td th:text="${board.id}"></td>
+    <td><a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a></td>
+    <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+    <td th:text="${board.boardHits}"></td>
+  </tr>
+</table>
+</body>
+<script>
+  const save = () =>{
+    location.href="/board/hello/write";
+  }
+
+</script>
+</html>

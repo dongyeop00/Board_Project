@@ -1,8 +1,12 @@
 package com.gdy.board_project.Entity;
 
+import com.gdy.board_project.Dto.BoardDTO;
+import com.gdy.board_project.Dto.MemberDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.lang.reflect.Member;
 
 @Entity
 @Setter
@@ -23,9 +27,28 @@ public class BoardEntity extends BaseEntity{
     @Column
     private int boardHits;
 
-    @ManyToOne
-    @JoinColumn(name="userID", referencedColumnName = "id")
-    private MemberEntity userID;
+    // member:board=1:N 관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="member_id")
+    private MemberEntity memberEntity;
 
 
+    public static BoardEntity toEntity(BoardDTO boardDTO, MemberEntity memberEntity) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setId(boardDTO.getId());
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardContent(boardDTO.getBoardContents());
+        boardEntity.setBoardHits(0);
+        boardEntity.setMemberEntity(memberEntity);
+        return boardEntity;
+    }
+
+    public static BoardEntity toSaveEntity(BoardDTO boardDTO, MemberEntity memberEntity) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardContent(boardDTO.getBoardContents());
+        boardEntity.setBoardHits(0);
+        boardEntity.setMemberEntity(memberEntity);
+        return boardEntity;
+    }
 }
