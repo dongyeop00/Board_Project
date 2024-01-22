@@ -1,6 +1,7 @@
 package com.gdy.board_project.Dto;
 
 import com.gdy.board_project.Entity.BoardEntity;
+import com.gdy.board_project.Enum.BoardCategory;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class BoardDTO {
     private LocalDateTime boardCreatedTime;
     private LocalDateTime boardUpdatedTime;
     private Long memberId;
+    private String category;
 
 
     public static BoardDTO toBoardDTO(BoardEntity boardEntity){
@@ -29,7 +31,7 @@ public class BoardDTO {
         return boardDTO;
     }
 
-    public static BoardDTO toBoardDTOList(BoardEntity boardEntity, Long memberId){
+    public static BoardDTO toBoardDTOList(BoardEntity boardEntity, Long memberId, String category){
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setId(boardEntity.getId());
         boardDTO.setBoardTitle(boardEntity.getBoardTitle());
@@ -38,6 +40,7 @@ public class BoardDTO {
         boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
         boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
         boardDTO.setMemberId(memberId);
+        boardDTO.setCategory(category);
         return boardDTO;
     }
 

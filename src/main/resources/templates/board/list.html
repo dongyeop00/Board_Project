@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form action="/board/hello/write" method="get">
+<form th:action="|@{/board/{category}/write (category = ${category})}|" method="get">
     <button type="submit">글 작성</button>
 </form>
 

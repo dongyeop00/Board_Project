@@ -2,6 +2,8 @@ package com.gdy.board_project.Controller;
 
 import com.gdy.board_project.Dto.BoardDTO;
 import com.gdy.board_project.Dto.MemberDTO;
+import com.gdy.board_project.Entity.BoardEntity;
+import com.gdy.board_project.Enum.BoardCategory;
 import com.gdy.board_project.Service.BoarderService;
 import com.gdy.board_project.Service.MemberService;
 import jakarta.servlet.http.HttpSession;
@@ -21,12 +23,20 @@ public class BoardController {
 
     @GetMapping("/{category}")
     public String list(@PathVariable String category, Model model){
+        BoardCategory boardCategory = BoardCategory.of(category);
+
+        List<BoardDTO> boardList = boarderService.findboard(boardCategory);
+
+        model.addAttribute("boardList", boardList);
+
+        /*
         List<BoardDTO> boardDTOList = boarderService.findboard();
         System.out.println("boardDTOList = " + boardDTOList);
         model.addAttribute("boardList",boardDTOList);
+        */
         return "/board/list";
     }
-
+/*
     @GetMapping("/hello/write")
     public String helloWrite(HttpSession session, Model model){
         String myEmail = ((MemberDTO) session.getAttribute("member")).getMemberEmail();
@@ -46,6 +56,27 @@ public class BoardController {
         boarderService.save(boardDTO,myId);
         return "redirect:/board/hello";
     }
+*/
+    @GetMapping("/{category}/write")
+    public String writeForm(@PathVariable String category, HttpSession session, Model model){
+        BoardCategory boardCategory = BoardCategory.of(category);
+        System.out.println(boardCategory);
 
+        String myEmail = ((MemberDTO) session.getAttribute("member")).getMemberEmail();
+        MemberDTO  memberDTO = memberService.updateForm(myEmail); //사용자 정보 가져옴
+
+        model.addAttribute("user",memberDTO);
+        model.addAttribute("category",category);
+
+        return "/board/write";
+    }
+
+    @PostMapping("/{category}/write")
+    public String write(@PathVariable String category, HttpSession session, @ModelAttribute BoardDTO boardDTO){
+        BoardCategory boardCategory = BoardCategory.of(category);
+        Long myId = ((MemberDTO) session.getAttribute("member")).getId();
+        boarderService.save(boardCategory, boardDTO, myId);
+        return "redirect:/board/" + category;
+    }
 
 }

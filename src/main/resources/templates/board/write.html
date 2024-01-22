@@ -5,7 +5,7 @@
   <title>write</title>
 </head>
 <body>
-<form action="/board/hello/write" method="post">
+<form th:action="@{/board/{category}/write(category=${category})}" method="post">
   작성자 id : <input type="text" th:value="${user.id}" name="id" readonly> <br>
   작성자 : <input type="text" th:value="${user.memberName}" name="memberName" readonly><br>
   title : <input type="text" name="boardTitle"> <br>
