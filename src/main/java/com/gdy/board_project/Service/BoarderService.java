@@ -1,6 +1,7 @@
 package com.gdy.board_project.Service;
 
 
+import com.gdy.board_project.Dto.BoardCntDTO;
 import com.gdy.board_project.Dto.BoardDTO;
 import com.gdy.board_project.Dto.MemberDTO;
 import com.gdy.board_project.Entity.BoardEntity;
@@ -41,5 +42,10 @@ public class BoarderService {
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO, memberEntity);
             boardRepository.save(boardEntity);
         }
+    }
+
+
+    public BoardCntDTO getBoardCnt() {
+        return BoardCntDTO.builder().totalBoardCnt(boardRepository.count()).build();
     }
 }

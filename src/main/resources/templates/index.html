@@ -34,6 +34,9 @@
     </form>
     <button onclick="join()" id="index_join">회원가입</button>
 </div>
+
+<div id = "memberCnt" th:text="'총 회원 수 : ' + ${memberCntDTO.totalUserCnt} + '명'"></div>
+<div id = "boardCnt" th:text="'총 게시글 개수 : ' + ${boardCntDTO.totalBoardCnt} + '개'"></div>
 <script>
     const join = () => {
         location.href="/member/join";

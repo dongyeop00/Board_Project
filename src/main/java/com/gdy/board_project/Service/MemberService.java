@@ -1,5 +1,6 @@
 package com.gdy.board_project.Service;
 
+import com.gdy.board_project.Dto.MemberCntDTO;
 import com.gdy.board_project.Dto.MemberDTO;
 import com.gdy.board_project.Entity.MemberEntity;
 import com.gdy.board_project.Repository.MemberRepository;
@@ -67,5 +68,9 @@ public class MemberService {
         else{
             return null;
         }
+    }
+
+    public MemberCntDTO getMemberCnt() {
+        return MemberCntDTO.builder().totalUserCnt(memberRepository.count()).build();
     }
 }

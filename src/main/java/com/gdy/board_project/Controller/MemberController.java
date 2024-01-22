@@ -59,6 +59,7 @@ public class MemberController {
         //내 정보는 session에 담겨져 있다.
         //session에 email값을 가져오고, email 값으로 db 전체 정보 가져오기
 
+        //위에서 session은 MemberDTO로 받았다.
         String myEmail = ((MemberDTO) session.getAttribute("member")).getMemberEmail();
         MemberDTO memberDTO = memberService.updateForm(myEmail);
         System.out.println("update memberDTO : " + memberDTO);

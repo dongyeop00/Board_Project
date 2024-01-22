@@ -42,6 +42,18 @@
     top: 25px;
 }
 
+#boardCnt{
+    position: absolute;
+    left: 1200px;
+    top: 100px;
+}
+
+#memberCnt{
+    position: absolute;
+    left: 1200px;
+    top: 80px;
+}
+
 nav{
     width : 1500px; /* 메뉴 틀의 넓이 */
     margin : 0 auto; /* 상하 마진 0, 좌우는 자동조절로 중앙 */
