@@ -7,10 +7,7 @@ import com.gdy.board_project.Service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 import java.util.List;
@@ -22,12 +19,12 @@ public class BoardController {
     private final BoarderService boarderService;
     private final MemberService memberService;
 
-    @GetMapping("/hello")
-    public String findAll(Model model){
+    @GetMapping("/{category}")
+    public String list(@PathVariable String category, Model model){
         List<BoardDTO> boardDTOList = boarderService.findboard();
         System.out.println("boardDTOList = " + boardDTOList);
         model.addAttribute("boardList",boardDTOList);
-        return "/board/hello";
+        return "/board/list";
     }
 
     @GetMapping("/hello/write")
@@ -49,5 +46,6 @@ public class BoardController {
         boarderService.save(boardDTO,myId);
         return "redirect:/board/hello";
     }
+
 
 }
