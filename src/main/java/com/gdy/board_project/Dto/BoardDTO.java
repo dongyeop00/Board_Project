@@ -22,12 +22,15 @@ public class BoardDTO {
     private String category;
 
 
-    public static BoardDTO toBoardDTO(BoardEntity boardEntity){
+    public static BoardDTO toBoardDTO(BoardEntity boardEntity, String category){
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setId(boardEntity.getId());
         boardDTO.setBoardTitle(boardEntity.getBoardTitle());
         boardDTO.setBoardContents(boardEntity.getBoardContent());
         boardDTO.setBoardHits(boardEntity.getBoardHits());
+        boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
+        boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
+        boardDTO.setCategory(category);
         return boardDTO;
     }
 

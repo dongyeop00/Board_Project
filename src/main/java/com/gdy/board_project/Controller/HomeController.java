@@ -1,6 +1,6 @@
 package com.gdy.board_project.Controller;
 
-import com.gdy.board_project.Service.BoarderService;
+import com.gdy.board_project.Service.BoardService;
 import com.gdy.board_project.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final BoarderService boardService;
+    private final BoardService boardService;
     private final MemberService memberService;
 
     @GetMapping("/")
