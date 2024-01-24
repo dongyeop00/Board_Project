@@ -87,9 +87,12 @@ public class BoardController {
     }
 
     @GetMapping("/{category}/delete/{id}")
-    public String delete(@PathVariable String category, @PathVariable Long id){
-        boardService.delete(id);
-        return "redirect:/board/" + category;
+    public String delete(@PathVariable String category, @PathVariable Long id,HttpSession session){
+        if(boardService.delete(id,session) !=  false){
+            return "redirect:/board/" + category;
+        }else{
+            return null;
+        }
     }
 
 }

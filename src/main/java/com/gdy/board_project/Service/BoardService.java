@@ -107,7 +107,20 @@ public class BoardService {
 
     }
 
-    public void delete(Long id) {
-        boardRepository.deleteById(id);
+    public boolean delete(Long id, HttpSession session) {
+        Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
+        Long myId = ((MemberDTO) session.getAttribute("member")).getId(); //현재 로그인한 id
+        if(optionalBoardEntity.isPresent()){
+            BoardEntity boardEntity = optionalBoardEntity.get();
+            if(myId.equals(boardEntity.getMemberID())){ //현재 세션과 현재 로그인id값이 같으면
+                boardRepository.deleteById(id);
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
     }
 }
