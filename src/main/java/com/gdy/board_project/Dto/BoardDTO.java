@@ -1,6 +1,7 @@
 package com.gdy.board_project.Dto;
 
 import com.gdy.board_project.Entity.BoardEntity;
+import com.gdy.board_project.Entity.MemberEntity;
 import com.gdy.board_project.Enum.BoardCategory;
 import lombok.*;
 
@@ -20,9 +21,9 @@ public class BoardDTO {
     private LocalDateTime boardUpdatedTime;
     private Long memberId;
     private String category;
+    private String memberName;
 
-
-    public static BoardDTO toBoardDTO(BoardEntity boardEntity, String category){
+    public static BoardDTO toBoardDTO(BoardEntity boardEntity, String category, String memberName){
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setId(boardEntity.getId());
         boardDTO.setBoardTitle(boardEntity.getBoardTitle());
@@ -31,10 +32,11 @@ public class BoardDTO {
         boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
         boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
         boardDTO.setCategory(category);
+        boardDTO.setMemberName(memberName);
         return boardDTO;
     }
 
-    public static BoardDTO toBoardDTOList(BoardEntity boardEntity, Long memberId, String category){
+    public static BoardDTO toBoardDTOList(BoardEntity boardEntity, Long id, String category, String memberName) {
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setId(boardEntity.getId());
         boardDTO.setBoardTitle(boardEntity.getBoardTitle());
@@ -42,9 +44,11 @@ public class BoardDTO {
         boardDTO.setBoardHits(boardEntity.getBoardHits());
         boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
         boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
-        boardDTO.setMemberId(memberId);
+        boardDTO.setMemberId(id);
         boardDTO.setCategory(category);
+        boardDTO.setMemberName(memberName);
         return boardDTO;
     }
+
 
 }

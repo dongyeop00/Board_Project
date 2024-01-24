@@ -3,11 +3,13 @@ package com.gdy.board_project.Service;
 
 import com.gdy.board_project.Dto.BoardCntDTO;
 import com.gdy.board_project.Dto.BoardDTO;
+import com.gdy.board_project.Dto.MemberDTO;
 import com.gdy.board_project.Entity.BoardEntity;
 import com.gdy.board_project.Entity.MemberEntity;
 import com.gdy.board_project.Enum.BoardCategory;
 import com.gdy.board_project.Repository.BoardRepository;
 import com.gdy.board_project.Repository.MemberRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,8 +46,7 @@ public class BoardService {
         List<BoardDTO> boardDTOList = new ArrayList<>();
         String category = boardCategory.name();
         for(BoardEntity boardEntity : boardEntityList){
-            System.out.println(boardDTOList);
-            boardDTOList.add(BoardDTO.toBoardDTOList(boardEntity, boardEntity.getId(),category));
+            boardDTOList.add(BoardDTO.toBoardDTOList(boardEntity, boardEntity.getId(),category, boardEntity.getMemberName()));
         }
         return boardDTOList;
     }
@@ -62,23 +63,33 @@ public class BoardService {
 
         if(optionalBoardEntity.isPresent()){
             BoardEntity boardEntity = optionalBoardEntity.get();
-            BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity,category);
+            BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity,category,boardEntity.getMemberName());
             return boardDTO;
         }
         else{
             return null;
         }
+    }
 
+    public BoardDTO update(BoardDTO boardDTO) {
+        return null;
+    }
 
-        /*
+    public BoardDTO updateForm(BoardCategory boardCategory, Long id, HttpSession session) {
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
-        if (optionalBoardEntity.isPresent()) {
+        Long myId = ((MemberDTO) session.getAttribute("member")).getId(); //해당 세션 id
+        String category = boardCategory.name();
+        if(optionalBoardEntity.isPresent()){
             BoardEntity boardEntity = optionalBoardEntity.get();
-            BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
-            return boardDTO;
-        } else {
+            if(myId.equals(boardEntity.getMemberID())){ //현재 세션과 현재 로그인id값이 같으면
+                BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity,category,boardEntity.getMemberName());
+                return boardDTO;
+            }else{
+                return null;
+            }
+        }else{
             return null;
         }
-         */
     }
+
 }

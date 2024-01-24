@@ -34,11 +34,8 @@ public class BoardController {
     @GetMapping("/{category}/write")
     public String writeForm(@PathVariable String category, HttpSession session, Model model){
         BoardCategory boardCategory = BoardCategory.of(category);
-        System.out.println(boardCategory);
-        String id = session.getId();
-        System.out.println(id);
-        String myEmail = ((MemberDTO) session.getAttribute("member")).getMemberEmail();
-        MemberDTO  memberDTO = memberService.updateForm(myEmail); //사용자 정보 가져옴
+        Long myId = ((MemberDTO) session.getAttribute("member")).getId();
+        MemberDTO  memberDTO = memberService.findById(myId); //사용자 정보 가져옴
 
         model.addAttribute("user",memberDTO);
         model.addAttribute("category",category);
@@ -67,15 +64,21 @@ public class BoardController {
     }
 
     @GetMapping("/{category}/update/{id}")
-    public String updateForm(@PathVariable String category, @PathVariable Long id, Model model){
-        BoardCategory boardCategory = BoardCategory.of(category);
-        BoardDTO boardDTO = boardService.findByCategoryandId(boardCategory,id); //id로 값들을 찾아 dto에 저장
+    public String updateForm(@PathVariable String category, @PathVariable Long id, Model model,HttpSession session){
+        BoardCategory boardCategory = BoardCategory.of(category); //카테고리 값 받기
+
+        BoardDTO boardDTO = boardService.updateForm(boardCategory,id,session); //카테고리와 id로 값들을 찾아 dto에 저장
+        if(boardDTO == null){
+            return null;
+        }
         model.addAttribute("boardUpdate", boardDTO); //저장한 값을 model에 담아 전달
+
         return "/board/update";
     }
 
     @PostMapping("/{category}/update")
-    public String update(@PathVariable String category, Model model){
+    public String update(@PathVariable String category, Model model, @ModelAttribute BoardDTO boardDTO){
+
         return null;
     }
 

@@ -7,22 +7,11 @@
 <body>
 <form action="/board/{category}/update" method="post" name="updateForm">
     <input type="hidden" name="id" th:value="${boardUpdate.id}">
+    작성자 : <input type="text" th:value="${boardUpdate.memberName}" name="memberName" readonly><br>
     title: <input type="text" name="boardTitle" th:value="${boardUpdate.boardTitle}"> <br>
     contents: <br> <textarea name="boardContents" cols="30" rows="10" th:text="${boardUpdate.boardContents}"></textarea> <br>
     <input type="hidden" name="boardHits" th:value="${boardUpdate.boardHits}">
-    <input type="submit" value="글수정" onclick="boardUpdate()">
+    <input type="submit" value="글수정">
 </form>
-<script th:inline="javascript">
-    /*
-    const boardUpdate = () => {
-        const pass = [[${boardUpdate.boardPassword}]];
-        const inputPass = document.getElementById("boardPassword").value;
-        if (pass == inputPass) {
-            document.updateForm.submit();
-        } else {
-            alert("비밀번호가 일치하지 않습니다!");
-        }
-    }
-     */
-</script>
+
 </body>

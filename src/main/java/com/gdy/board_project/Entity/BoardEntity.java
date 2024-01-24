@@ -32,7 +32,7 @@ public class BoardEntity extends BaseEntity{
     private BoardCategory category; // 카테고리
 
     // member:board=1:N 관계
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="member_id")
     private MemberEntity memberEntity;
 
@@ -55,5 +55,13 @@ public class BoardEntity extends BaseEntity{
         boardEntity.setBoardHits(0);
         boardEntity.setMemberEntity(memberEntity);
         return boardEntity;
+    }
+
+    public String getMemberName(){ //member_id에 접속해 해당 id의 memberName 알아내기!
+        return memberEntity.getMemberName();
+    }
+
+    public Long getMemberID(){
+        return memberEntity.getId();
     }
 }
