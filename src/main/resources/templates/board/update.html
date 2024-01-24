@@ -5,7 +5,7 @@
     <title>update</title>
 </head>
 <body>
-<form action="/board/{category}/update" method="post" name="updateForm">
+<form th:action="@{/board/{category}/update/{id}(category=${category},id=${id})}" method="post" name="updateForm">
     <input type="hidden" name="id" th:value="${boardUpdate.id}">
     작성자 : <input type="text" th:value="${boardUpdate.memberName}" name="memberName" readonly><br>
     title: <input type="text" name="boardTitle" th:value="${boardUpdate.boardTitle}"> <br>

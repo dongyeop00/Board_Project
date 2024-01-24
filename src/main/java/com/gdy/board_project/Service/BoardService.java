@@ -71,9 +71,6 @@ public class BoardService {
         }
     }
 
-    public BoardDTO update(BoardDTO boardDTO) {
-        return null;
-    }
 
     public BoardDTO updateForm(BoardCategory boardCategory, Long id, HttpSession session) {
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
@@ -92,4 +89,25 @@ public class BoardService {
         }
     }
 
+
+    public BoardDTO update(BoardCategory boardCategory, Long boardid,BoardDTO boardDTO,Long memberId) {
+        //boardRepositiory.save 가 insert인지, update인지 판단 방법 : id가 있냐 없냐
+        //id가 없으면 insert, id가 있으면 update
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+        String category = boardCategory.name();
+
+        if(optionalMemberEntity.isPresent()){
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardCategory ,boardDTO, memberEntity);
+            boardRepository.save(boardEntity);
+            return findByCategoryandId(boardCategory,boardid);
+        }else{
+            return null;
+        }
+
+    }
+
+    public void delete(Long id) {
+        boardRepository.deleteById(id);
+    }
 }

@@ -76,10 +76,20 @@ public class BoardController {
         return "/board/update";
     }
 
-    @PostMapping("/{category}/update")
-    public String update(@PathVariable String category, Model model, @ModelAttribute BoardDTO boardDTO){
+    @PostMapping("/{category}/update/{id}")
+    public String update(@PathVariable String category,@PathVariable Long id, Model model, @ModelAttribute BoardDTO boardDTO,HttpSession session){
+        BoardCategory boardCategory = BoardCategory.of(category);
+        Long myId = ((MemberDTO) session.getAttribute("member")).getId();
 
-        return null;
+        BoardDTO board = boardService.update(boardCategory,id,boardDTO,myId);
+        model.addAttribute("board",board);
+        return "/board/detail";
+    }
+
+    @GetMapping("/{category}/delete/{id}")
+    public String delete(@PathVariable String category, @PathVariable Long id){
+        boardService.delete(id);
+        return "redirect:/board/" + category;
     }
 
 }

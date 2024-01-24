@@ -51,7 +51,7 @@
 <form th:action="@{/board/{category}/update/{id} (category=${category}, id=${board.id})}" method="get">
     <button id="updateBtn">수정</button>
 </form>
-<form th:action="@{/board/{category}/delete (category=${category})}" method="get">
+<form th:action="@{/board/{category}/delete/{id} (category=${category},id=${board.id})}" method="get">
     <button id="deleteBtn">삭제</button>
 </form>
 

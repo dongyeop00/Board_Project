@@ -51,4 +51,15 @@ public class BoardDTO {
     }
 
 
+    public static BoardDTO toUpdateBoardDTO(BoardEntity boardEntity, String memberName) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(boardEntity.getId());
+        boardDTO.setBoardTitle(boardEntity.getBoardTitle());
+        boardDTO.setBoardContents(boardEntity.getBoardContent());
+        boardDTO.setBoardHits(boardEntity.getBoardHits());
+        boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
+        boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
+        boardDTO.setMemberName(memberName);
+        return boardDTO;
+    }
 }

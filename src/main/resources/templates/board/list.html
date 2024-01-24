@@ -22,7 +22,7 @@
         <td th:text="${board.memberName}"></td>
         <td th:text="${board.id}  "></td>
         <td><a th:href="@{/board/{category}/{id}(category=${category}, id=${board.id})}" th:text="${board.boardTitle}  "></a></td>
-        <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd   HH:mm:ss')}"></td>
+        <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy - MM - dd '+' HH : mm : ss')}"></td>
         <td th:text="${board.boardHits}  "></td>
     </tr>
 </table>
