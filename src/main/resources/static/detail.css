@@ -1,19 +1,19 @@
 #listBtn {
     position: absolute;
     left: 670px;
-    top: 150px;
+    top: 160px;
 }
 
 #updateBtn {
     position: absolute;
     left: 730px;
-    top: 150px; /* 조정 가능한 값 */
+    top: 160px; /* 조정 가능한 값 */
 }
 
 #deleteBtn {
     position: absolute;
     left: 790px;
-    top: 150px; /* 조정 가능한 값 */
+    top: 160px; /* 조정 가능한 값 */
 }
 
 #comment-write{

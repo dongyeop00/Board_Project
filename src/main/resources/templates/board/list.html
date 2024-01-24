@@ -12,16 +12,18 @@
 
 <table>
     <tr>
+        <th>작성자</th>
         <th>id</th>
         <th>title</th>
         <th>date</th>
         <th>hits</th>
     </tr>
     <tr th:each="board: ${boardList}">
-        <td th:text="${board.id}"></td>
-        <td><a th:href="@{/board/{category}/{id}(category=${category}, id=${board.id})}" th:text="${board.boardTitle}"></a></td>
-        <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-        <td th:text="${board.boardHits}"></td>
+        <td th:text="${board.memberName}"></td>
+        <td th:text="${board.id}  "></td>
+        <td><a th:href="@{/board/{category}/{id}(category=${category}, id=${board.id})}" th:text="${board.boardTitle}  "></a></td>
+        <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd   HH:mm:ss')}"></td>
+        <td th:text="${board.boardHits}  "></td>
     </tr>
 </table>
 </body>
