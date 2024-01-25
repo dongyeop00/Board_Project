@@ -73,4 +73,8 @@ public class MemberService {
     public MemberCntDTO getMemberCnt() {
         return MemberCntDTO.builder().totalUserCnt(memberRepository.count()).build();
     }
+
+    public void deleteByid(Long id) {
+        memberRepository.deleteById(id);
+    }
 }
