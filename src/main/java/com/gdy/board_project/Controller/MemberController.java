@@ -1,6 +1,8 @@
 package com.gdy.board_project.Controller;
 
+import com.gdy.board_project.Dto.BoardDTO;
 import com.gdy.board_project.Dto.MemberDTO;
+import com.gdy.board_project.Service.BoardService;
 import com.gdy.board_project.Service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -8,12 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
+    private final BoardService boardService;
 
     @GetMapping("/join")
     public String joinForm(){
@@ -49,8 +54,10 @@ public class MemberController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model){
         MemberDTO memberDTO = memberService.findById(id);
+        List<BoardDTO> boardDTOList = boardService.findAll(id);
         System.out.println(memberDTO);
         model.addAttribute("member",memberDTO);
+        model.addAttribute("boardList",boardDTOList);
         return "/user/detail"; //값들을 detail로 가져간다
     }
 

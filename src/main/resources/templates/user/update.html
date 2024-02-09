@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>회원 수정</title>
+    <link rel="stylesheet" type="text/css" href="../nav.css">
+
 </head>
 <body>
+
+<div th:replace="/fragments/nav.html :: fragment-nav"></div>
 
 <form action="/member/update" method="post">
     <input type="hidden" th:value="${updateMember.id}" name="id"><br>

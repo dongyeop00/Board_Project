@@ -4,39 +4,74 @@
     <meta charset="UTF-8">
     <title>동엽이 홈페이지</title>
     <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="nav.css">
 </head>
 <body>
-<nav>
-    <ul>
-        <li><a href="/">로고</a></li>
-        <li><a href="/board/hello">가입 인사</a></li>
-        <li><a href="/board/free">자유게시판</a></li>
-        <li><a href="/board/gold">골드게시판</a></li>
-    </ul>
-</nav>
 
-<div th:if="${session.member != null}">
-    <!-- 세션에 로그인 정보가 있는 경우에만 실행 -->
-    <p id="information" th:text="${session.member.memberName + '님 안녕하세요'}"></p>
-    <!--진짜 뭔 이유인지 모르겠는데 form으로 안묶으면 절대 안됐음 ㅡㅡ -->
-    <form th:action="@{|/member/detail/${session.member.id}|}" method="get">
-        <button type="submit" id="index_detail">내 정보</button>
-    </form>
-    <button onclick="logout()" id="index_logout">로그아웃</button>
+<div th:replace="/fragments/nav.html :: fragment-nav"></div>
+
+<div class="container">
+    <div class="userExplanation">
+        <h1>유저 기능</h1><br>
+        <h4>로그인 기능</h4>
+        - Post /index <br>
+        - 로그인 성공 시 index 페이지 rediect 후 memberName으로 변환 ✅ <br><br>
+
+        <h4>회원 가입 기능</h4>
+        - Post /user/save<br>
+        - 이메일, 닉네임이 중복되면 회원가입 불가<br>
+        - 비밀번호는 암호화해서 저장 ✅<br> <br>
+
+        <h4>마이 페이지</h4>
+        - Get /member/detail/{id} <br>
+        - 회원 탈퇴 기능 ✅<br>
+        - 비밀번호 변경 기능 ✅<br>
+        - 회원 별 게시한 게시글 확인 가능 ✅<br>
+        - 회원 별 게시한 댓글 확인 가능<br>
+    </div>
+
+    <div class="boardExplanation">
+        <h1>게시판 기능</h1><br>
+        <h4>게시판 종류</h4>
+        - 가입인사, 자유게시판, 골드게시판<br><br>
+
+        <h4>게시판 세부 내용</h4>
+        - Get /board/{category}<br>
+        - 해당 카테고리의 글 리스트 출력 ✅<br>
+        - 글 작성 버튼 시 해당 카테고리에 작성할 수 있는 글 작성 페이지로 이동 ✅<br>
+        - 글 클릭 시 해당 글 조회 페이지로 이동 ✅<br><br>
+
+        <h4>글 작성 페이지</h4>
+        - Get /board/{category}/write<br>
+        - 로그인 한 유저만 접근 가능 ✅<br>
+        - 현재 로그인한 회원의 닉네임과 id 출력 ✅<br>
+        - 글 작성 성공 시 작성된 글 카테고리로 redirect ✅<br><br>
+
+        <h4>글 조회 페이지</h4>
+        - Get /borad/{category}/{id}<br>
+        - id에 해당하는 글 내용을 화면에 출력 ✅<br>
+        - 해당 글의 작성자라면 수정 가능 ✅<br>
+        - 해당 글의 작성자라면 삭제 가능 ✅<br>
+        - 로그인한 유저는 댓글 작성 가능<br>
+        - 본인 댓글 수정 및 삭제 가능<br><br>
+
+        <h4>댓글 기능 (Ajax)</h4>
+        - 댓글 작성 :<br>
+        - 댓글 수정 :<br>
+        - 댓글 삭제 :<br>
+        - 로그인 한 유저만 댓글 작성 가능<br>
+        - 본인이 작성한 댓글 수정, 삭제 가능<br>
+        - 글 조회 페이지 하단에서 해당 글 댓글 추가 기능<br><br>
+
+        <h4>페이징 기능</h4>
+    </div>
+    <div class="memberCnt">
+        <div th:text="'총 회원 수 : ' + ${memberCntDTO.totalUserCnt} + '명'"></div>
+        <br><br>
+        <div th:text="'총 게시글 개수 : ' + ${boardCntDTO.totalBoardCnt} + '개'"></div>
+    </div>
 </div>
 
-<div th:if="${session.member == null}">
-    <!-- 세션에 로그인 정보가 없는 경우에만 실행 -->
-    <form action="/member/login" method="post">
-        <input type="text" name="memberEmail" id="index_email" placeholder="이메일"> <br>
-        <input type="password" name="memberPassword" id="index_password" placeholder="비밀번호"> <br>
-        <input type="submit" id="index_login" value="로그인">
-    </form>
-    <button onclick="join()" id="index_join">회원가입</button>
-</div>
-
-<div id = "memberCnt" th:text="'총 회원 수 : ' + ${memberCntDTO.totalUserCnt} + '명'"></div>
-<div id = "boardCnt" th:text="'총 게시글 개수 : ' + ${boardCntDTO.totalBoardCnt} + '개'"></div>
 <script>
     const join = () => {
         location.href="/member/join";

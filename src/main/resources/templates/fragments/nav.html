@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="fragment-nav">
+<nav>
+  <ul>
+    <li><a href="/">로고</a></li>
+    <li><a href="/board/hello">가입 인사</a></li>
+    <li><a href="/board/free">자유게시판</a></li>
+    <li><a href="/board/gold">골드게시판</a></li>
+  </ul>
+</nav>
+
+<div th:if="${session.member != null}">
+  <!-- 세션에 로그인 정보가 있는 경우에만 실행 -->
+  <p id="information" th:text="${session.member.memberName + '님 안녕하세요'}"></p>
+  <!--진짜 뭔 이유인지 모르겠는데 form으로 안묶으면 절대 안됐음 ㅡㅡ -->
+  <form th:action="@{|/member/detail/${session.member.id}|}" method="get">
+    <button type="submit" id="index_detail">내 정보</button>
+  </form>
+  <button onclick="logout()" id="index_logout">로그아웃</button>
+</div>
+
+<div th:if="${session.member == null}">
+  <!-- 세션에 로그인 정보가 없는 경우에만 실행 -->
+  <form action="/member/login" method="post">
+    <input type="text" name="memberEmail" id="index_email" placeholder="이메일"> <br>
+    <input type="password" name="memberPassword" id="index_password" placeholder="비밀번호"> <br>
+    <input type="submit" id="index_login" value="로그인">
+  </form>
+  <button onclick="join()" id="index_join">회원가입</button>
+</div>
+
+</div>
+
+</html>

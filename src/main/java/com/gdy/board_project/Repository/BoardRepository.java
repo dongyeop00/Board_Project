@@ -15,6 +15,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity,Long> {
     List<BoardEntity> findAllByCategory(BoardCategory category);
     List<BoardEntity> findByCategory(BoardCategory category);
     //Optional<MemberEntity> findByUserid(Long userid);
+    List<BoardEntity> findAllByMemberEntityOrderByIdDesc(MemberEntity memberEntity);
 
     // update board_table set board_hits=board_hits+1 where id=?
     @Modifying //@Query 사용할 때 필수로 붙이는 어노테이션

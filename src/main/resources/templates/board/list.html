@@ -3,8 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title> 게시판</title>
+    <style>
+        table{
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th,td {
+            padding: 10px;
+            border-bottom: 1px solid #0099ff;
+            text-align: center;
+        }
+        tr:hover{
+            background-color: #0099ff;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="../nav.css">
+
 </head>
 <body>
+<div th:replace="/fragments/nav.html :: fragment-nav"></div>
 
 <form th:action="|@{/board/{category}/write (category = ${category})}|" method="get">
     <button type="submit">글 작성</button>
@@ -13,10 +30,10 @@
 <table>
     <tr>
         <th>작성자</th>
-        <th>id</th>
-        <th>title</th>
-        <th>date</th>
-        <th>hits</th>
+        <th>게시글 번호</th>
+        <th>제목</th>
+        <th>날짜</th>
+        <th>조회수</th>
     </tr>
     <tr th:each="board: ${boardList}">
         <td th:text="${board.memberName}"></td>

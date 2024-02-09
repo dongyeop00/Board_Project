@@ -3,12 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>내 정보</title>
+    <style>
+        table{
+            border-collapse: collapse;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        th,td {
+            padding: 10px;
+            border-bottom: 1px solid #0099ff;
+            text-align: center;
+        }
+        tr:hover{
+            background-color: #0099ff;
+        }
+
+        .form-wrapper {
+            white-space: nowrap; /* 줄 바꿈 방지 */
+        }
+
+        .form-wrapper form {
+            display: inline-block;
+            margin-right: 5px; /* 각 form 요소 사이의 간격 조정 */
+        }
+
+        .information{
+            margin-left: auto;
+            margin-right: auto;
+            color: #0099ff;
+            border : 2px solid #cccccc;
+            border-radius: 10px;
+            width: 40%;
+            text-align: center;
+            margin-top: 10px;
+            padding: 5px;
+        }
+
+    </style>
 </head>
 <body>
 
+<div class="information">
+    내 정보
+</div>
+<br>
 
 <!-- controller에서 member로 담아서 줫으니 member로 접근 -->
-<table align="center">
+<table>
     <tr>
         <td>이메일 :</td>
         <td th:text="${member.memberEmail}"></td>
@@ -23,17 +65,44 @@
     </tr>
 </table>
 
-<form action="/" method="get">
-    <button onclick="home()"> 이전 </button>
-</form>
+<br>
 
-<form action="/member/update" method="get">
-    <button onclick="update()"> 정보 수정 </button>
-</form>
+<div class="form-wrapper">
+    <form action="/" method="get">
+        <button onclick="home()"> 이전 </button>
+    </form>
 
-<form th:action="|@{/member/delete/{id}(id=${id})}|" method="get">
-    <button>회원 탈퇴</button>
-</form>
+    <form action="/member/update" method="get">
+        <button onclick="update()"> 정보 수정 </button>
+    </form>
+
+    <form th:action="|@{/member/delete/{id}(id=${id})}|" method="get">
+        <button>회원 탈퇴</button>
+    </form>
+</div>
+
+<br>
+<div class="information">
+    내 글
+</div>
+<br>
+
+<table>
+    <tr>
+        <th>작성자</th>
+        <th>게시글 번호</th>
+        <th>제목</th>
+        <th>날짜</th>
+        <th>조회수</th>
+    </tr>
+    <tr th:each="board: ${boardList}">
+        <td th:text="${member.memberName}"></td>
+        <td th:text="${board.id}  "></td>
+        <td th:text="${board.boardTitle}"></td>
+        <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy - MM - dd '+' HH : mm : ss')}"></td>
+        <td th:text="${board.boardHits}  "></td>
+    </tr>
+</table>
 
 </body>
 <script>

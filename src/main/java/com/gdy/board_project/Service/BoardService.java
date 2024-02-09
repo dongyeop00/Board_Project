@@ -123,4 +123,15 @@ public class BoardService {
         }
 
     }
+
+    public List<BoardDTO> findAll(Long id) {
+        MemberEntity memberEntity = memberRepository.findById(id).get();
+        List<BoardEntity> boardEntityList = boardRepository.findAllByMemberEntityOrderByIdDesc(memberEntity);
+        List<BoardDTO> boardDTOList = new ArrayList<>();
+        for(BoardEntity boardEntity : boardEntityList){
+            BoardDTO boardDTO = BoardDTO.toBoardDTOWithID(boardEntity,id);
+            boardDTOList.add(boardDTO);
+        }
+        return boardDTOList;
+    }
 }

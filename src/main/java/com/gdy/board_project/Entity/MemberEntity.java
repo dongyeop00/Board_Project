@@ -1,6 +1,8 @@
 package com.gdy.board_project.Entity;
 
 import com.gdy.board_project.Dto.MemberDTO;
+import com.gdy.board_project.Enum.BoardCategory;
+import com.gdy.board_project.Enum.MemberRank;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +28,7 @@ public class MemberEntity {
 
     @Column
     private String memberName;
+
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardEntity> boardEntityList = new ArrayList<>();

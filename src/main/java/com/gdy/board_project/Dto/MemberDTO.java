@@ -13,6 +13,7 @@ public class MemberDTO {
     private String memberEmail;
     private String memberPassword;
     private String memberName;
+    private String rank;
 
     public static MemberDTO toMemberDTO(MemberEntity memberEntity){
         MemberDTO memberDTO = new MemberDTO();

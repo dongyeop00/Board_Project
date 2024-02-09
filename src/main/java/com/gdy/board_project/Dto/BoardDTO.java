@@ -62,4 +62,14 @@ public class BoardDTO {
         boardDTO.setMemberName(memberName);
         return boardDTO;
     }
+
+    public static BoardDTO toBoardDTOWithID(BoardEntity boardEntity, Long userID){
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(boardEntity.getId());
+        boardDTO.setBoardTitle(boardEntity.getBoardTitle());
+        boardDTO.setBoardHits(boardEntity.getBoardHits());
+        boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
+        boardDTO.setMemberId(userID);
+        return boardDTO;
+    }
 }
