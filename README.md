@@ -1,5 +1,7 @@
 # Spring Boot 게시판
 
+![메인화면](https://github.com/dongyeop00/Board_Project/assets/117625978/557f3b29-2b33-4f17-9352-17e5a356f835)
+
 <br>
 
 # 개발환경
