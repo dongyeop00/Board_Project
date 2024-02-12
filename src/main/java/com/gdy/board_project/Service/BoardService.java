@@ -7,6 +7,7 @@ import com.gdy.board_project.Dto.MemberDTO;
 import com.gdy.board_project.Entity.BoardEntity;
 import com.gdy.board_project.Entity.MemberEntity;
 import com.gdy.board_project.Enum.BoardCategory;
+import com.gdy.board_project.Repository.BoardFileRepository;
 import com.gdy.board_project.Repository.BoardRepository;
 import com.gdy.board_project.Repository.MemberRepository;
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +25,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
+    private final BoardFileRepository boardFileRepository;
 
     public void save(BoardCategory boardCategory, BoardDTO boardDTO, Long myId) {
         //부모엔티티 조회하기
