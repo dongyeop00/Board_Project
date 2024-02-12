@@ -21,11 +21,31 @@
 
         .form-wrapper {
             white-space: nowrap; /* 줄 바꿈 방지 */
+            text-align: right; /* 오른쪽 정렬 */
+            margin-top: 20px; /* 위쪽 여백 추가 */
         }
 
         .form-wrapper form {
             display: inline-block;
-            margin-right: 5px; /* 각 form 요소 사이의 간격 조정 */
+            margin-left: 5px; /* 각 form 요소 사이의 간격 조정 */
+        }
+
+        .form-wrapper button {
+            background-color: #0099ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .form-wrapper button:hover {
+            background-color: #005580; /* 마우스 호버 시 배경색 변경 */
         }
 
         .information{
@@ -66,22 +86,6 @@
 </table>
 
 <br>
-
-<div class="form-wrapper">
-    <form action="/" method="get">
-        <button onclick="home()"> 이전 </button>
-    </form>
-
-    <form action="/member/update" method="get">
-        <button onclick="update()"> 정보 수정 </button>
-    </form>
-
-    <form th:action="|@{/member/delete/{id}(id=${id})}|" method="get">
-        <button>회원 탈퇴</button>
-    </form>
-</div>
-
-<br>
 <div class="information">
     내 글
 </div>
@@ -103,6 +107,43 @@
         <td th:text="${board.boardHits}  "></td>
     </tr>
 </table>
+
+<br>
+<div class="information">
+    내 댓글
+</div>
+<br>
+
+<table>
+    <tr>
+        <th>댓글 번호</th>
+        <th>게시글 번호</th>
+        <th>게시글 제목</th>
+        <th>댓글 내용</th>
+        <th>작성 시간</th>
+    </tr>
+    <tr th:each="comment: ${commentList}">
+        <td th:text="${comment.id}"></td>
+        <td th:text="${comment.boardId}  "></td>
+        <td th:text="${comment.boardTitle}"></td>
+        <td th:text="${comment.commentContents}  "></td>
+        <td th:text="*{#temporals.format(comment.commentCreatedTime, 'yyyy - MM - dd '+' HH : mm : ss')}"></td>
+    </tr>
+</table>
+
+<div class="form-wrapper">
+    <form action="/" method="get">
+        <button onclick="home()"> 이전 </button>
+    </form>
+
+    <form action="/member/update" method="get">
+        <button onclick="update()"> 정보 수정 </button>
+    </form>
+
+    <form th:action="|@{/member/delete/{id}(id=${id})}|" method="get">
+        <button>회원 탈퇴</button>
+    </form>
+</div>
 
 </body>
 <script>
