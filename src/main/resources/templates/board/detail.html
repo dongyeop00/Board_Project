@@ -5,97 +5,138 @@
     <title>detail</title>
     <link rel="stylesheet" type="text/css" href="/detail.css">
     <!-- jquery cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    게시글 상세 정보
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>게시판 번호</th>
+                            <td th:text="${board.id}"></td>
+                        </tr>
+                        <tr>
+                            <th>작성자</th>
+                            <td th:text="${board.memberName}"></td>
+                        </tr>
+                        <tr>
+                            <th>제목</th>
+                            <td th:text="${board.boardTitle}" class="text-primary"></td>
+                        </tr>
+                        <tr>
+                            <th>작성 날짜</th>
+                            <td th:text="${board.boardCreatedTime}"></td>
+                        </tr>
+                        <tr>
+                            <th>조회수</th>
+                            <td th:text="${board.boardHits}"></td>
+                        </tr>
+                        <tr>
+                            <th>내용</th>
+                            <td th:text="${board.boardContents}" class="text-break"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <div class="row justify-content-end">
+                        <div class="col-auto">
+                            <form th:action="@{/board/{category} (category=${category})}" method="get">
+                                <button class="btn btn-secondary">목록</button>
+                            </form>
+                        </div>
+                        <div class="col-auto">
+                            <form th:action="@{/board/{category}/update/{id} (category=${category}, id=${board.id})}" method="get">
+                                <button class="btn btn-primary">수정</button>
+                            </form>
+                        </div>
+                        <div class="col-auto">
+                            <form th:action="@{/board/{category}/delete/{id} (category=${category},id=${board.id})}" method="get">
+                                <button class="btn btn-danger">삭제</button>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
 
-<table class="table-light" align="center">
-    <tr class="table-light">
-        <th>게시판 번호 : </th>
-        <td th:text="${board.id}"></td>
-    </tr>
-    <tr class="table-light">
-        <th>작성자 : </th>
-        <td th:text="${board.memberName}"></td>
-    </tr>
-    <tr class="table-light">
-        <th>제목 : </th>
-        <td th:text="${board.boardTitle}"></td>
-    </tr>
-    <tr class="table-light">
-        <th>작성 날짜 : </th>
-        <td th:text="${board.boardCreatedTime}"></td>
-    </tr>
-    <tr class="table-light">
-        <th>조회수 : </th>
-        <td th:text="${board.boardHits}"></td>
-    </tr>
-    <tr class="table-light">
-        <th>내용 : </th>
-        <td th:text="${board.boardContents}"></td>
-    </tr>
+    <!-- 댓글 작성 부분 -->
+        <div class="row mt-4">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        댓글 작성
+                    </div>
+                    <div class="card-body">
+                        <span id="commentWriter" th:text="'작성자 : ' + ${member.memberName}" class="form-control mb-2" readonly></span>
+                        <input type="text" id="commentContents" placeholder="내용" class="form-control mb-2">
+                        <button id="comment-write-btn" onclick="commentWrite()" class="btn btn-success">댓글 작성</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!--
-    <tr th:if="${board.fileAttached == 1}">
-      <th>image</th>
-      <td><img th:src="@{|/upload/${board.storedFileName}|}" alt=""></td>
-    </tr>
-    -->
 
-</table>
-<form th:action="@{/board/{category} (category=${category})}" method="get">
-    <button id="listBtn">목록</button>
-</form>
-<form th:action="@{/board/{category}/update/{id} (category=${category}, id=${board.id})}" method="get">
-    <button id="updateBtn">수정</button>
-</form>
-<form th:action="@{/board/{category}/delete/{id} (category=${category},id=${board.id})}" method="get">
-    <button id="deleteBtn">삭제</button>
-</form>
-
-<!-- 댓글 작성 부분 -->
-<div id="comment-write" align="center">
-    <input type="text" id="commentWriter" placeholder="작성자">
-    <input type="text" id="commentContents" placeholder="내용">
-    <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
+    <!-- 댓글 출력 부분 -->
+    <div class="row mt-4">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    댓글 목록
+                </div>
+                <div class="card-body">
+                    <div id="comment-list">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">댓글번호</th>
+                                <th scope="col">작성자</th>
+                                <th scope="col">내용</th>
+                                <th scope="col">작성시간</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="comment: ${commentList}">
+                                <td th:text="${comment.id}"></td>
+                                <td th:text="${comment.memberName}"></td>
+                                <td th:text="${comment.commentContents}"></td>
+                                <td th:text="${comment.commentCreatedTime}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<!-- 댓글 출력 부분 -->
-<!--
-<div id="comment-list">
-  <table>
-    <tr>
-      <th>댓글번호</th>
-      <th>작성자</th>
-      <th>내용</th>
-      <th>작성시간</th>
-    </tr>
-    <tr th:each="comment: ${commentList}">
-      <td th:text="${comment.id}"></td>
-      <td th:text="${comment.commentWriter}"></td>
-      <td th:text="${comment.commentContents}"></td>
-      <td th:text="${comment.commentCreatedTime}"></td>
-    </tr>
-  </table>
 </div>
--->
-
 </body>
+
 <script th:inline="javascript">
     const commentWrite = () => {
-        const writer = document.getElementById("commentWriter").value;
         const contents = document.getElementById("commentContents").value;
-        console.log("작성자: ", writer);
+        const boardId = [[${board.id}]];
+        const memberId = [[${member.id}]];
+        const memberName = [[${member.memberName}]];
         console.log("내용: ", contents);
-        const id = [[${board.id}]];
+        console.log("작성자 : ", memberId);
+        console.log("게시판 번호 : ", boardId);
+        console.log("작성자 이름 : ", memberName);
         $.ajax({
-            // 요청방식: post, 요청주소: /comment/save, 요청데이터: 작성자, 작성내용, 게시글번호
             type: "post",
             url: "/comment/save",
             data: {
-                "commentWriter": writer,
+                "memberId": memberId,
                 "commentContents": contents,
-                "boardId": id
+                "boardId": boardId
             },
             success: function (res) {
                 console.log("요청성공", res);
@@ -107,7 +148,7 @@
                 for (let i in res) {
                     output += "<tr>";
                     output += "<td>" + res[i].id + "</td>";
-                    output += "<td>" + res[i].commentWriter + "</td>";
+                    output += "<td>" + res[i].memberName + "</td>";
                     output += "<td>" + res[i].commentContents + "</td>";
                     output += "<td>" + res[i].commentCreatedTime + "</td>";
                     output += "</tr>";
@@ -121,7 +162,8 @@
                 console.log("요청실패", err);
             }
         });
-
     }
 </script>
+
+
 </html>

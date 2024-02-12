@@ -1,45 +1,17 @@
-.boardCnt{
-    margin-right: auto;
-    border : 2px solid #cccccc;
-    border-radius: 10px;
-    width: 40%;
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 70%;
-    padding: 5px;
-}
-
-.memberCnt{
-    margin-right: auto;
-    border : 2px solid #cccccc;
-    border-radius: 10px;
-    width: 40%;
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 70%;
-    padding: 5px;
-}
-
 .container {
     display: flex;
     justify-content: space-between;
 }
-.userExplanation{
-    margin-right: auto;
+
+.userExplanation,
+.boardExplanation,
+.commentExplanation,
+.Cnt {
     border : 2px solid #cccccc;
     border-radius: 10px;
-    width: 40%;
-    text-align: center;
+    width: calc(25% - 20px); /* 25%에서 간격을 제외한 너비를 각각 설정 */
     margin-top: 10px;
     padding: 5px;
 }
-.boardExplanation{
-    margin-left: auto;
-    margin-right: auto;
-    border : 2px solid #cccccc;
-    border-radius: 10px;
-    width: 40%;
-    text-align: center;
-    margin-top: 10px;
-    padding: 5px;
-}
+
+/* 나머지 스타일링은 각각의 클래스에 적용 */

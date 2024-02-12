@@ -1,9 +1,11 @@
 package com.gdy.board_project.Controller;
 
 import com.gdy.board_project.Dto.BoardDTO;
+import com.gdy.board_project.Dto.CommentDTO;
 import com.gdy.board_project.Dto.MemberDTO;
 import com.gdy.board_project.Enum.BoardCategory;
 import com.gdy.board_project.Service.BoardService;
+import com.gdy.board_project.Service.CommentService;
 import com.gdy.board_project.Service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
     private final MemberService memberService;
+    private final CommentService commentService;
 
     @GetMapping("/{category}")
     public String list(@PathVariable String category, Model model){
@@ -52,13 +55,20 @@ public class BoardController {
     }
 
     @GetMapping("/{category}/{id}")
-    public String detail(@PathVariable String category, @PathVariable Long id, Model model){
+    public String detail(@PathVariable String category, @PathVariable Long id, Model model, HttpSession session){
         BoardCategory boardCategory = BoardCategory.of(category);
+        MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
         // 1. 게시글 조회 1 올리기
         boardService.updateHits(id);
 
         // 2. 게시글 데이터를 가져와서 detail.html에 출력한다.
         BoardDTO boardDTO = boardService.findByCategoryandId(boardCategory,id);
+
+        //댓글 목록 가져오기
+        List<CommentDTO> commentDTOList = commentService.findComment(id);  //member 값들이 null이 되는걸 해결해야댐
+        model.addAttribute("commentList",commentDTOList);
+
+        model.addAttribute("member",memberDTO);
         model.addAttribute("board",boardDTO);
         return "/board/detail";
     }

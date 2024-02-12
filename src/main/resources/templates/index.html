@@ -55,20 +55,23 @@
         - 로그인한 유저는 댓글 작성 가능<br>
         - 본인 댓글 수정 및 삭제 가능<br><br>
 
-        <h4>댓글 기능 (Ajax)</h4>
-        - 댓글 작성 :<br>
-        - 댓글 수정 :<br>
-        - 댓글 삭제 :<br>
-        - 로그인 한 유저만 댓글 작성 가능<br>
-        - 본인이 작성한 댓글 수정, 삭제 가능<br>
-        - 글 조회 페이지 하단에서 해당 글 댓글 추가 기능<br><br>
-
         <h4>페이징 기능</h4>
     </div>
-    <div class="memberCnt">
+
+    <div class="commentExplanation">
+        <h4>댓글 기능 (Ajax)</h4>
+        - 댓글 작성 ✅<br>
+        - 댓글 수정 :<br>
+        - 댓글 삭제 :<br>
+        - 로그인 한 유저만 댓글 작성 가능 ✅<br><br>
+    </div>
+
+    <div class="Cnt">
         <div th:text="'총 회원 수 : ' + ${memberCntDTO.totalUserCnt} + '명'"></div>
         <br><br>
         <div th:text="'총 게시글 개수 : ' + ${boardCntDTO.totalBoardCnt} + '개'"></div>
+        <br><br>
+        <div th:text="'총 댓글 개수 : ' + ${commentCntDTO.totalCommentCnt} + '개'"></div>
     </div>
 </div>
 
